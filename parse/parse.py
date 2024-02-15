@@ -1,0 +1,80 @@
+import sys
+import argparse
+import xml.etree.ElementTree as ET
+import xml.dom.minidom
+
+from InstructionFactory import InstructionFactory
+from Exceptions import ParseException, IncorrectOrMissingHeaderException
+
+
+def check_header() -> None:
+    line = get_line_with_content()
+    if line != ".IPPcode24":
+        raise IncorrectOrMissingHeaderException()
+
+
+def generate_xml() -> ET.ElementTree:
+    root = ET.Element("program", {"language": "IPPcode24"})
+
+    line = get_line_with_content()
+    order_counter = 1
+    while line:
+        parts = line.split("#")[0].split()
+        opcode = parts[0]
+        args = parts[1:]
+        instruction = InstructionFactory.create_instruction(opcode, args)
+
+        instruction_el = ET.SubElement(
+            root,
+            "instruction",
+            {"order": str(order_counter), "opcode": instruction.opcode.upper()},
+        )
+
+        for i, arg in enumerate(instruction.args, start=1):
+            ET.SubElement(
+                instruction_el, f"arg{i}", {"type": arg.type}
+            ).text = arg.value
+
+        order_counter += 1
+        line = get_line_with_content()
+
+    return ET.ElementTree(root)
+
+
+def get_line_with_content() -> str | None:
+    for line in sys.stdin:
+        stripped_line = line.split("#")[0].strip()
+        if stripped_line and not stripped_line.startswith("#"):
+            return stripped_line
+
+
+def pretty_print_xml(xml_string):
+    dom = xml.dom.minidom.parseString(xml_string)
+    pretty_xml_as_bytes = dom.toprettyxml(indent="  ", encoding="UTF-8")
+    pretty_xml_as_string = pretty_xml_as_bytes.decode("UTF-8")
+    print(pretty_xml_as_string)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="This filter script (parse.py in Python 3.10) reads the source code in IPPcode24 from the standard input, checks the lexical and syntactic correctness of the code, and outputs the XML representation of the program to the standard output according to the specification in section 3.1."
+    )
+    parser.parse_args()
+
+    check_header()
+
+    xml_tree = generate_xml()
+
+    xml_string = ET.tostring(xml_tree.getroot(), encoding="UTF-8")
+    pretty_print_xml(xml_string)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except ParseException as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(e.exit_code)
+    except Exception as e:
+        print(f"Error: Unprecedented error occurred: {e}", file=sys.stderr)
+        sys.exit(99)
