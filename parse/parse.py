@@ -8,12 +8,24 @@ from Exceptions import ParseException, IncorrectOrMissingHeaderException
 
 
 def check_header() -> None:
+    """
+    Check the header of the source code written in IPPcode24.
+
+    Raises:
+        IncorrectOrMissingHeaderException: If the header is incorrect or missing.
+    """
     line = get_line_with_content()
     if line != ".IPPcode24":
         raise IncorrectOrMissingHeaderException()
 
 
 def generate_xml() -> ET.ElementTree:
+    """
+    Generate the XML representation of the program.
+
+    Returns:
+        ET.ElementTree: The XML representation of the program.
+    """
     root = ET.Element("program", {"language": "IPPcode24"})
 
     line = get_line_with_content()
@@ -42,13 +54,28 @@ def generate_xml() -> ET.ElementTree:
 
 
 def get_line_with_content() -> str | None:
+    """
+    Get the next line from the standard input that contains content.
+
+    Returns:
+        str | None: The next line from the standard input that contains content, or None if there are no more lines.
+    """
     for line in sys.stdin:
         stripped_line = line.split("#")[0].strip()
         if stripped_line and not stripped_line.startswith("#"):
             return stripped_line
 
 
-def pretty_print_xml(xml_string):
+def pretty_print_xml(xml_string) -> None:
+    """
+    Pretty print the given XML string.
+
+    Args:
+        xml_string (str): The XML string to pretty print.
+
+    Returns:
+        None
+    """
     dom = xml.dom.minidom.parseString(xml_string)
     pretty_xml_as_bytes = dom.toprettyxml(indent="  ", encoding="UTF-8")
     pretty_xml_as_string = pretty_xml_as_bytes.decode("UTF-8")
@@ -56,6 +83,9 @@ def pretty_print_xml(xml_string):
 
 
 def main() -> None:
+    """
+    The main function of the script.
+    """
     parser = argparse.ArgumentParser(
         description="This filter script (parse.py in Python 3.10) reads the source code in IPPcode24 from the standard input, checks the lexical and syntactic correctness of the code, and outputs the XML representation of the program to the standard output according to the specification in section 3.1."
     )

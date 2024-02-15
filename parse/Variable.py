@@ -1,6 +1,12 @@
-from Argument import Argument
 from Symb import Symb
+from Argument import Argument
 
 
-class Variable(Argument, Symb):
+class Variable(Symb, Argument):
+    """
+    Class representing a variable.
+
+    Inherits from: Symb, Argument
+    """
+
     pass

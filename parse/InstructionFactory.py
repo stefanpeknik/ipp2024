@@ -1,12 +1,13 @@
-from typing import List
+from typing import List, Dict
 
 from ArgumentFactory import ArgumentFactory
 
+from Argument import Argument
 from Variable import Variable
 from Symb import Symb
 from Label import Label
 from Type import Type
-from Label import Label
+from Literal import Literal
 
 from Instruction import Instruction
 
@@ -17,7 +18,11 @@ from Exceptions import (
 
 
 class InstructionFactory:
-    __INSTRUCTIONS = {
+    """
+    Factory class for creating Instruction objects.
+    """
+
+    __INSTRUCTIONS: Dict[str, List[Argument]] = {
         "MOVE": [Variable, Symb],
         "CREATEFRAME": [],
         "PUSHFRAME": [],
@@ -56,6 +61,21 @@ class InstructionFactory:
 
     @staticmethod
     def create_instruction(instruction: str, args: List[str]) -> Instruction:
+        """
+        Create an Instruction object from the given instruction and arguments.
+
+        Args:
+            instruction (str): The instruction.
+            args (List[str]): The arguments.
+
+        Returns:
+            Instruction: The created Instruction object.
+
+        Raises:
+            UnknownOrIncorrectOpcodeException: If the instruction is unknown or incorrect.
+            OtherLexicalOrSyntaxErrorException: If the number of arguments is incorrect or if the argument types are incorrect.
+        """
+
         instruction = instruction.upper()  # case insensitive
         if instruction not in InstructionFactory.__INSTRUCTIONS:
             raise UnknownOrIncorrectOpcodeException(

@@ -12,8 +12,26 @@ from Exceptions import OtherLexicalOrSyntaxErrorException
 
 
 class ArgumentFactory:
+    """
+    Factory class for creating Argument objects.
+    """
+
     @staticmethod
     def create_argument(arg: str, expected_class: type = None) -> Argument:
+        """
+        Create an Argument object based on the given string.
+
+        Args:
+            arg (str): The string to create the Argument object from.
+            expected_class (type): The expected class of the Argument object.
+
+        Returns:
+            Argument: The created Argument object.
+
+        Raises:
+            OtherLexicalOrSyntaxErrorException: If the given argument does not match the expected type.
+        """
+
         var_re = r"^(LF|TF|GF)@[a-zA-Z_$&%*!?-][a-zA-Z0-9_$&%*!?-]*$"
         bool_re = r"^bool@(true|false)$"
         string_re = r'^string@((?![\s#"\\]).|\\[0-9]{3})*$'
