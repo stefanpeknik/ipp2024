@@ -1,4 +1,3 @@
-from typing import List
 
 from Argument import Argument
 
@@ -12,7 +11,7 @@ class Instruction:
         args (List[Argument]): The arguments of the instruction.
     """
 
-    def __init__(self, opcode: str, args: List[Argument]):
+    def __init__(self, opcode: str, args: list[Argument]):
         """
         Initialize the Instruction object.
 

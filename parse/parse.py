@@ -1,5 +1,6 @@
 import sys
 import argparse
+
 import xml.etree.ElementTree as ET
 import xml.dom.minidom
 
@@ -43,9 +44,9 @@ def generate_xml() -> ET.ElementTree:
         )
 
         for i, arg in enumerate(instruction.args, start=1):
-            ET.SubElement(
-                instruction_el, f"arg{i}", {"type": arg.type}
-            ).text = arg.value
+            ET.SubElement(instruction_el, f"arg{i}", {"type": arg.type}).text = (
+                arg.value
+            )
 
         order_counter += 1
         line = get_line_with_content()

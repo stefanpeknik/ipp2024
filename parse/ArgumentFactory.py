@@ -1,5 +1,4 @@
 import re
-from typing import Type
 
 from Argument import Argument
 from Variable import Variable

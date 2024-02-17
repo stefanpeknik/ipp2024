@@ -1,5 +1,3 @@
-from typing import List, Dict
-
 from ArgumentFactory import ArgumentFactory
 
 from Argument import Argument
@@ -22,7 +20,7 @@ class InstructionFactory:
     Factory class for creating Instruction objects.
     """
 
-    __INSTRUCTIONS: Dict[str, List[Argument]] = {
+    __INSTRUCTIONS: list[str, dict[Argument]] = {
         "MOVE": [Variable, Symb],
         "CREATEFRAME": [],
         "PUSHFRAME": [],
@@ -60,7 +58,7 @@ class InstructionFactory:
     }
 
     @staticmethod
-    def create_instruction(instruction: str, args: List[str]) -> Instruction:
+    def create_instruction(instruction: str, args: list[str]) -> Instruction:
         """
         Create an Instruction object from the given instruction and arguments.
 
