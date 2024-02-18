@@ -1,3 +1,5 @@
+import re
+
 from ArgumentFactory import ArgumentFactory
 
 from Argument import Argument
@@ -73,6 +75,12 @@ class InstructionFactory:
             UnknownOrIncorrectOpcodeException: If the instruction is unknown or incorrect.
             OtherLexicalOrSyntaxErrorException: If the number of arguments is incorrect or if the argument types are incorrect.
         """
+
+        instruction_re = r"^[a-zA-Z\d]+$"
+        if not re.match(instruction_re, instruction):
+            raise OtherLexicalOrSyntaxErrorException(
+                "Incorrect instruction format: " + instruction + "."
+            )
 
         instruction = instruction.upper()  # case insensitive
         if instruction not in InstructionFactory.__INSTRUCTIONS:
