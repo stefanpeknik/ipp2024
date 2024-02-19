@@ -96,24 +96,24 @@ class ArgumentFactory:
         if expected_class is not None:
             if expected_class == Label and ArgumentFactory.is_label(arg):
                 return Label(arg)
-            elif expected_class == Type and ArgumentFactory.is_type(arg):
+            if expected_class == Type and ArgumentFactory.is_type(arg):
                 return Type(arg)
-            elif (
+            if (
                 expected_class == Symb or expected_class == Variable
             ) and ArgumentFactory.is_variable(arg):
                 return Variable(arg)
-            elif expected_class == Symb or expected_class == Literal:
+            if expected_class == Symb or expected_class == Literal:
                 if ArgumentFactory.is_literal(arg):
                     return Literal(arg)
-        else:
-            if ArgumentFactory.is_variable(arg):
-                return Variable(arg)
-            elif ArgumentFactory.is_literal(arg):
-                return Literal(arg)
-            elif ArgumentFactory.is_label(arg):
-                return Label(arg)
-            elif ArgumentFactory.is_type(arg):
-                return Type(arg)
+
+        if ArgumentFactory.is_variable(arg):
+            return Variable(arg)
+        if ArgumentFactory.is_literal(arg):
+            return Literal(arg)
+        if ArgumentFactory.is_label(arg):
+            return Label(arg)
+        if ArgumentFactory.is_type(arg):
+            return Type(arg)
 
         raise OtherLexicalOrSyntaxErrorException(
             "Given argument: " + arg + " does not match any expected type."
