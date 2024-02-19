@@ -2,12 +2,7 @@ import re
 
 from ArgumentFactory import ArgumentFactory
 
-from Argument import Argument
-from Variable import Variable
-from Symb import Symb
-from Label import Label
-from Type import Type
-from Literal import Literal
+from arguments import Argument, Variable, Literal, Label, Type, Symb
 
 from Instruction import Instruction
 
