@@ -61,7 +61,7 @@ class InstructionFactory:
 
         Args:
             instruction (str): The instruction.
-            args (List[str]): The arguments.
+            args (list[str]): The arguments.
 
         Returns:
             Instruction: The created Instruction object.
