@@ -1,4 +1,4 @@
-from Argument import Argument
+from .Argument import Argument
 
 
 class Symb(Argument):

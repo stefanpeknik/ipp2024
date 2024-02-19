@@ -1,4 +1,4 @@
-from Argument import Argument
+from .Argument import Argument
 
 
 class Label(Argument):
@@ -8,4 +8,12 @@ class Label(Argument):
     Inherits from: Argument
     """
 
-    pass
+    def __init__(self, value: str) -> None:
+        """
+        Initializes the label with a name.
+
+        Args:
+            value (str): The name of the label.
+        """
+        self.type = "label"
+        self.value = value

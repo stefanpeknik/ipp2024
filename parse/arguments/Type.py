@@ -1,4 +1,4 @@
-from Argument import Argument
+from .Argument import Argument
 
 
 class Type(Argument):
@@ -8,4 +8,12 @@ class Type(Argument):
     Inherits from: Argument
     """
 
-    pass
+    def __init__(self, value: str) -> None:
+        """
+        Initializes the type with a name.
+
+        Args:
+            value (str): The name of the type.
+        """
+        self.type = "type"
+        self.value = value

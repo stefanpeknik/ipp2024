@@ -1,5 +1,5 @@
-from Symb import Symb
-from Argument import Argument
+from .Symb import Symb
+from .Argument import Argument
 
 
 class Literal(Symb, Argument):
@@ -9,4 +9,11 @@ class Literal(Symb, Argument):
     Inherits from: Argument, Symb
     """
 
-    pass
+    def __init__(self, arg: str) -> None:
+        """
+        Initializes the literal with a value.
+
+        Args:
+            arg (str): The literal (type@value).
+        """
+        self.type, self.value = arg.split("@", 1)
