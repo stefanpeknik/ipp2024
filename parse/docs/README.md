@@ -28,4 +28,10 @@ Due to the fact that some special values can be considered as more than one argu
 
 After an instruction and its arguments are initialized, they are translated into an XML element and added to the final XML tree. This tree is then printed on the standard output (stdout) at the end of the program's execution.
 
+### Module Diagram
+
 ![module diagram](packages_parse.png)
+
+### Class Diagram
+
+![class diagram](classes_parse.png)
