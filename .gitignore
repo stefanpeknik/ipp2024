@@ -1,4 +1,2 @@
 *test*/
-*.png
-*.dot
 __pycache__/
