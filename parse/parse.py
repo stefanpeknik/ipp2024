@@ -16,7 +16,7 @@ def check_header() -> None:
         IncorrectOrMissingHeaderException: If the header is incorrect or missing.
     """
     line = get_line_with_content()
-    if line.lower() != ".ippcode24":
+    if line is None or line.lower() != ".ippcode24":
         raise IncorrectOrMissingHeaderException()
 
 
@@ -29,9 +29,9 @@ def generate_xml() -> ET.ElementTree:
     """
     root = ET.Element("program", {"language": "IPPcode24"})
 
-    line = get_line_with_content()
-    order_counter = 1
-    while line:
+    for order_counter, line in enumerate(
+        iter(lambda: get_line_with_content(), None), start=1
+    ):
         parts = line.split("#")[0].split()
         opcode = parts[0]
         args = parts[1:]
@@ -47,9 +47,6 @@ def generate_xml() -> ET.ElementTree:
             ET.SubElement(instruction_el, f"arg{i}", {"type": arg.type}).text = (
                 arg.value
             )
-
-        order_counter += 1
-        line = get_line_with_content()
 
     return ET.ElementTree(root)
 
