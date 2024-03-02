@@ -16,7 +16,7 @@ def check_header() -> None:
         IncorrectOrMissingHeaderException: If the header is incorrect or missing.
     """
     line = get_line_with_content()
-    if line != ".IPPcode24":
+    if line.lower() != ".ippcode24":
         raise IncorrectOrMissingHeaderException()
 
 
